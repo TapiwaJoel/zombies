@@ -1,14 +1,12 @@
 package zw.co.tapiwajoel.zombies.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-
 import lombok.*;
 import zw.co.tapiwajoel.zombies.utils.enums.Gender;
 import zw.co.tapiwajoel.zombies.utils.enums.InventoryResources;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 
@@ -35,17 +33,17 @@ public class Survivor {
     private Gender gender;
 
     @NotNull
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Location lastLocation;
 
     private boolean infected;
 
-    @NotEmpty
     @ElementCollection(targetClass = InventoryResources.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(
             name = "inventory_resources",
             joinColumns = @JoinColumn(name = "survivor_id")
     )
+    @Size(min = 1)
     private Collection<InventoryResources> inventoryResources;
 }

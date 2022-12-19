@@ -1,5 +1,10 @@
 package zw.co.tapiwajoel.zombies.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +26,14 @@ public class ReportContaminationController {
     private final ReportContaminationService reportContaminationService;
 
     @PostMapping("/{survivorId}")
+    @Operation(summary = "Report Contamination")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Report Contamination added successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ServiceResponse.class))
+                    })
+    })
     public ResponseEntity<ServiceResponse<ReportContamination>> save(@PathVariable long survivorId) {
         log.info(":::::::: Report Contamination :::::::");
         return ResponseEntity.ok(reportContaminationService.reportContamination(survivorId));
